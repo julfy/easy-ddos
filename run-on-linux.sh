@@ -1,35 +1,37 @@
 #!/bin/bash
 
 REPO_NAME=easy-ddos
-ACTUAL_TAG=0.1.0
+ACTUAL_TAG=master
 
-# from branch: URL="https://github.com/julfy/$REPO_NAME/archive/refs/heads/$ACTUAL_TAG.zip"
-URL="https://github.com/julfy/$REPO_NAME/archive/refs/tags/$ACTUAL_TAG.zip"
+URL="https://github.com/julfy/$REPO_NAME/archive/refs/heads/$ACTUAL_TAG.zip"
+# from tag: URL="https://github.com/julfy/$REPO_NAME/archive/refs/tags/$ACTUAL_TAG.zip"
 
 # Install docker
 if [[ -z "$(which docker)" ]]; then
-	curl -fsSL https://get.docker.com -o get-docker.sh
-	sh get-docker.sh
-	rm get-docker.sh
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    rm get-docker.sh
 fi
 sudo systemctl start docker
 
-# Download
-curl -L --output "$ACTUAL_TAG.zip" "$URL"
-# or wget -q "$URL"
+# Download or update
+if [[ $1 = '-u' || ! -f 'Dockerfile' ]]; then
+    curl -L --output "$ACTUAL_TAG.zip" "$URL"
+    # or wget -q "$URL"
 
-# Extract
-unzip -o "$ACTUAL_TAG.zip"
-rm -rf "$REPO_NAME"
-mv "$REPO_NAME-$ACTUAL_TAG" "$REPO_NAME"
+    # Extract
+    unzip -o "$ACTUAL_TAG.zip"
+    mv "$REPO_NAME-$ACTUAL_TAG/Dockerfile" .
+    mv "$REPO_NAME-$ACTUAL_TAG/attack.sh" .
+    mv "$REPO_NAME-$ACTUAL_TAG/targets.txt" .
 
-# Cleanup
-rm "$ACTUAL_TAG.zip"
+    # Cleanup
+    rm -rf "$ACTUAL_TAG.zip" "$REPO_NAME-$ACTUAL_TAG"
+fi
 
-# TODO: Select random/all targets 
+# TODO: Select random/all targets
 
 # Build docker image
-cd "$REPO_NAME"
 sudo docker build --no-cache --tag $REPO_NAME .
 
 # Start

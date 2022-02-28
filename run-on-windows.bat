@@ -1,11 +1,11 @@
 @set "REPO_NAME=easy-ddos"
-@set "ACTUAL_TAG=0.1.0"
+@set "ACTUAL_TAG=master"
 
 @curl -L "https://desktop.docker.com/win/main/amd64/Docker Desktop Installer.exe" -o dockerinstaller.exe
 @dockerinstaller.exe
 
-:: from branch: @set "URL=http://github.com/julfy/%REPO_NAME%/archive/refs/heads/%ACTUAL_TAG%.zip"
-@set "URL=http://github.com/julfy/%REPO_NAME%/archive/refs/tags/%ACTUAL_TAG%.zip"
+@set "URL=http://github.com/julfy/%REPO_NAME%/archive/refs/heads/%ACTUAL_TAG%.zip"
+:: from tag: @set "URL=http://github.com/julfy/%REPO_NAME%/archive/refs/tags/%ACTUAL_TAG%.zip"
 
 @curl -L %URL% -o %ACTUAL_TAG%.zip"
 @powershell -NoP -NonI -Command "Expand-Archive %ACTUAL_TAG%.zip %REPO_NAME%"
