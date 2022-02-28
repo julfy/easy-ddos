@@ -15,6 +15,10 @@ To allow anyone willing to take part in cyber war against propaganda.
 3. Save to any location of your choice.
 2. Open `Terminal` application
 3. Run `bash <path to the saved file>` command. If you saved to `Downloads`, the command would be `bash ~/Downloads/run-on-linux.sh`
+# One command clone and run
+Prerequisites: curl, git, python\
+\
+curl -s -L https://raw.githubusercontent.com/julfy/easy-ddos/master/linux-clone-and-run.sh | bash
 
 ### Windows (in progress):
 1. Download [run-on-windows.bat](https://raw.githubusercontent.com/julfy/easy-ddos/master/run-on-windows.bat)
