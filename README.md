@@ -18,7 +18,6 @@ To allow anyone willing to take part in cyber war against propaganda.
 \
 One command clone and run
 Prerequisites: curl, git, python\
-\
 curl -s -L https://raw.githubusercontent.com/julfy/easy-ddos/master/linux-clone-and-run.sh | bash
 
 ### Windows (in progress):
